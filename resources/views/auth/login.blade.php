@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
+@section('title', 'Sign In')
+
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
+<div class="container" style="margin: 0; padding: 0; display: grid; height: 50vh; place-items: center;">
+    <div class="row justify-content-center" style="width: 100%;">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>

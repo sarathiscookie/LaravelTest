@@ -48,6 +48,9 @@ Route::prefix('admin')->group(function(){
 Route::prefix('user')->group(function(){
 	Route::group(['middleware' => ['auth', 'user']], function () {
 		// User dashboard
-		Route::get('dashboard', 'User\DashboardController@index')->name('user.dashboard');
+        Route::get('dashboard', 'User\DashboardController@index')->name('user.dashboard');
+        
+        /* Store profile details */
+        Route::post('/dashboard/store', 'User\DashboardController@store')->name('user.dashboard.store');
 	});
 });
