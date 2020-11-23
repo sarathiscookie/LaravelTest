@@ -52,6 +52,9 @@ Route::prefix('user')->group(function(){
         Route::get('dashboard', 'User\DashboardController@index')->name('user.dashboard');
         
         /* Store profile details */
-        Route::post('/dashboard/store', 'User\DashboardController@store')->name('user.dashboard.store');
+		Route::post('/dashboard/store', 'User\DashboardController@store')->name('user.dashboard.store');
+		
+		/* Change password */
+        Route::post('/dashboard/password/change', 'User\DashboardController@updatePassword')->name('user.dashboard.password.change');
 	});
 });

@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\ProfileRequest;
+use Illuminate\Support\Facades\Hash;
 
 class DashboardController extends Controller
 {
@@ -30,8 +31,7 @@ class DashboardController extends Controller
             $explodePublic = explode('public', $user->profile->photo);
 
             $profilePhoto = $explodePublic[1];
-        }    
-        else {
+        } else {
             $profilePhoto = 'nopreview.png';
         }
 
@@ -71,17 +71,27 @@ class DashboardController extends Controller
                     'address' => $request->address,
                     'photo' => $this->storeImageAndGetPath(self::FOLDER_NAME, Auth::user()->id, $request->file('photo')),
                 ]
-            );  
+            );
 
             DB::commit();
 
             return redirect('/user/dashboard')->with('status', 'Profile updated successfully!');
-        } 
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             DB::rollBack();
 
             return redirect('/user/dashboard')->with('status', 'Whoops! Something went wrong. Please try again later.');
         }
+    }
+
+    /**
+     * Update password.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updatePassword(Request $request)
+    {
+        //
     }
 
     /**
