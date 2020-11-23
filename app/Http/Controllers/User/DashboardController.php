@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\ProfileRequest;
+use App\Rules\MatchOldPassword;
 use Illuminate\Support\Facades\Hash;
 
 class DashboardController extends Controller
@@ -91,7 +92,15 @@ class DashboardController extends Controller
      */
     public function updatePassword(Request $request)
     {
-        //
+        $request->validate([
+            'current_password' => ['required', new MatchOldPassword],
+            'new_password' => ['required', 'string', 'min:8'],
+            'new_confirm_password' => ['same:new_password'],
+        ]);
+   
+        User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
+   
+        return redirect('/user/dashboard')->with('passwordStatus', 'Password changed successfully.');
     }
 
     /**

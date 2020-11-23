@@ -55,6 +55,6 @@ Route::prefix('user')->group(function(){
 		Route::post('/dashboard/store', 'User\DashboardController@store')->name('user.dashboard.store');
 		
 		/* Change password */
-        Route::post('/dashboard/password/change', 'User\DashboardController@updatePassword')->name('user.dashboard.password.change');
+        Route::post('change-password', 'User\DashboardController@updatePassword')->name('change.password');
 	});
 });
