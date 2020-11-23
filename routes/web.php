@@ -20,3 +20,34 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes for admin
+|--------------------------------------------------------------------------
+|
+| Here is the web routes for admin.
+|
+*/
+Route::prefix('admin')->group(function(){
+	Route::group(['middleware' => ['auth', 'admin']], function () {
+        // Admin dashboard
+		Route::get('dashboard', 'Admin\DashboardController@index')->name('admin.dashboard');
+	});
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes for user
+|--------------------------------------------------------------------------
+|
+| Here is the web routes for user.
+|
+*/
+Route::prefix('user')->group(function(){
+	Route::group(['middleware' => ['auth', 'user']], function () {
+		// User dashboard
+		Route::get('dashboard', 'User\DashboardController@index')->name('user.dashboard');
+	});
+});

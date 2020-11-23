@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'username', 'password',
     ];
 
     /**
@@ -36,4 +36,67 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Set the user's name.
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = strtolower($value);
+    }
+
+    /**
+    * Get the user's name.
+    *
+    * @param  string  $value
+    * @return string
+    */
+    public function getNameAttribute($value)
+    {
+        return ucwords($value);
+    }
+
+    /**
+    * Scope for admin role.
+    *
+    * @param  object  $query
+    * @return string
+    */
+    public function scopeAdmin($query)
+    {
+        return $query->where('user_type', 0);
+    }
+
+    /**
+    * Scope for user role.
+    *
+    * @param  object  $query
+    * @return string
+    */
+    public function scopeUser($query)
+    {
+        return $query->where('user_type', 1);
+    }
+
+    /**
+     * Scope a query to only include active users.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('status', 1);
+    }
+
+    /**
+    * Get the profiles matching with user
+    */
+    public function profiles()
+    {
+        return $this->hasMany(Profile::class);
+    }
 }

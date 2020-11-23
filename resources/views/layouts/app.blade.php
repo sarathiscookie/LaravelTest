@@ -72,9 +72,9 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <div id="app" class="col-md-12 text-center">
             @yield('content')
-        </main>
+        </div>
     </div>
 </body>
 </html>
