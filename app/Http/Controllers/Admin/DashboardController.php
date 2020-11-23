@@ -2,11 +2,23 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
 {
+    /* User status */
+    public function status()
+    {
+        $status = [
+            1 => 'Active',
+            0 => 'Deactive'
+        ];
+
+        return $status;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +26,9 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard');
+        $users = User::with('profile')->get();
+
+        return view('admin.dashboard', ['users' => $users, 'userStatus' => $this->status()]);
     }
 
     /**
@@ -64,12 +78,21 @@ class DashboardController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        try {
+            $userStatus = User::find($request->id);
+
+            $userStatus->status = $request->status;
+
+            $userStatus->save();
+
+            return response()->json(['userStatus' => 'success', 'message' => 'Status updated successfully'], 201);
+        } catch (\Exception $e) {
+            return response()->json(['userStatus' => 'failure', 'message' => 'Whoops! Something went wrong'], 404);
+        }
     }
 
     /**

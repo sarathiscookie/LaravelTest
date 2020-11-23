@@ -19,8 +19,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes for admin
@@ -33,6 +31,9 @@ Route::prefix('admin')->group(function(){
 	Route::group(['middleware' => ['auth', 'admin']], function () {
         // Admin dashboard
 		Route::get('dashboard', 'Admin\DashboardController@index')->name('admin.dashboard');
+
+		// User status update
+		Route::put('dashboard/user/status/update', 'Admin\DashboardController@update')->name('admin.dashboard.user.status.update');
 	});
 });
 

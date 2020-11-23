@@ -9,15 +9,15 @@
           <div class="sidebar-sticky">
               <ul class="nav flex-column">
                   <li class="nav-item">
-                      <a class="nav-link active" href="">
+                      <a class="nav-link active" href="/user/dashboard">
                           <i class="fas fa-home"></i>
                           Profile <span class="sr-only">(current)</span>
                       </a>
 
-                      <a class="nav-link active" href="">
+                      {{-- <a class="nav-link active" href="/user/change/password">
                         <i class="fas fa-home"></i>
                         Change Password <span class="sr-only">(current)</span>
-                    </a>
+                      </a> --}}
                   </li>
 
               </ul>
